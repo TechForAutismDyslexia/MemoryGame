@@ -15,25 +15,60 @@
         "rug": ["y", "r", "n"]
       },
       "3": {
-        "bug": ["n", "y", "r"],
-        "fog": ["p", "a", "s"],
-        "job": ["p", "r", "d"],
-        "tan": ["j", "g", "l"],
-        "lap": ["y", "r", "n"]
+        "bug": ["b", "k", "o"],
+        "fog": ["e", "f", "x"],
+        "job": ["t", "v", "j"],
+        "tan": ["t", "g", "a"],
+        "lap": ["q", "o", "l"]
       },
       "4": {
-        "base": ["n", "y", "r"],
-        "thin": ["p", "a", "s"],
-        "heel": ["p", "r", "d"],
-        "sink": ["j", "g", "l"],
-        "wire": ["y", "r", "n"]
+        "base": ["b", "s", "d"],
+        "thin": ["b", "t", "m"],
+        "heel": ["b", "l", "h"],
+        "sink": ["t", "s", "a"],
+        "wire": ["w", "k", "h"]
       },
       "5": {
-        "sat": ["n", "y", "r"],
-        "mat": ["p", "a", "s"],
-        "cat": ["p", "r", "d"],
-        "hat": ["j", "g", "l"],
-        "pat": ["y", "r", "n"]
+        "sat": ["s", "l", "x"],
+        "mat": ["l", "m", "x"],
+        "cat": ["n", "j", "c"],
+        "hat": ["k", "h", "j"],
+        "pat": ["p", "j", "y"]
+      },
+      "6":{
+        "rest": ["a","m","r"],
+        "fest": ["n", "d", "f"],
+        "lock": ["w", "l", "v"],
+        "tick": ["t", "z", "g"],
+        "swim": ["c", "b", "s"]
+      },
+      "7":{
+        "away": ["a","t","b"],
+        "cost": ["j","n","c"],
+        "dust": ["k","d","n"],
+        "fell": ["f","q","r"],
+        "soft": ["k","t","s"]
+      },
+      "8":{
+        "date": ["v","d","c"],
+        "meet": ["m","v","l"],
+        "paid": ["b","y","p"],
+        "band": ["t","z","b"],
+        "save": ["b","m","s"]
+      },
+      "9":{
+        "brook": ["br","cl","gl"],
+        "crash": ["ob","sv","cr"],
+        "queen": ["da","qu","wu"],
+        "doing": ["do","bl","sm"],
+        "apple": ["et","be","ap"]
+      },
+      "10":{
+        "still": ["tn","st","pl"],
+        "sweet": ["sw","fr","ja"],
+        "swamp": ["bl","ti","sw"],
+        "spill": ["bl","sp","sz"],
+        "swift": ["sw","pr","fl"]
       }
     }
   }

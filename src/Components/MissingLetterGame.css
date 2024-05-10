@@ -1,11 +1,57 @@
+body{
+  background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) );
+}
 .grid-container {
     display: flex;
     justify-content: center; 
-    align-items: center;
   }
   
   .grid-container > div {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
+    justify-content: center; 
+    align-items: center;
     grid-gap: 10px;
   }
+
+  .left-buttons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .right-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin-left: 15vw;
+  }
+  
+  .letter-button {
+    background-color: rgb(255, 215, 0);
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 30px;
+  }
+
+  .letter-button:hover {
+    background-color: rgb(255, 215, 0);
+  }
+  
+  .word-button {
+    background-color: rgb(255, 165, 0);
+    margin: 5px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 50px;
+  }
+
+  .word-button:hover {
+    background-color: rgb(255, 165, 0);
+  }
+  
+  
+ .nextButton{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }

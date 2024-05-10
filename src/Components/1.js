@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import React from 'react';
 import wordsData from '../words.json';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 
 export default function MissingLetterGame() {
-  const [index, setIndex] = useState(1);
+  const { index } = useParams();
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
-  const [buttonColors, setButtonColors] = useState(Array(15).fill(''));
-  const [noOfTries,setNoOfTries] = useState(0);
-  const [nextButtonVisible, setNextButtonVisible] = useState(false);
-  const [correctTries, setCorrectTries] = useState(0);
 
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
@@ -20,37 +20,28 @@ export default function MissingLetterGame() {
     tempArr = [];
   }
 
-  
+  let noOfTries = 0;
+
+  const [nextButtonVisible, setNextButtonVisible] = useState(false);
+  const [correctTries, setCorrectTries] = useState(0);
 
   useEffect(() => {
     let underWord = [];
-    if(index>8){
-      for (let i = 0; i < 5; i++) {
-        underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
-        underWord.push(wordArr[i].replace(wordArr[i][1], "_"));
-      }
-    }
-    else{
-      for (let i = 0; i < 5; i++) {
-        underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
-      }
+    for (let i = 0; i < 5; i++) {
+      underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
     }
     setW(underWord);
-    setButtonColors(Array(15).fill(''));
   }, [index]);
 
-  const checkLetter = (letter, missingIndex, word, index, i) => {
+  const checkLetter = (letter, missingIndex, word, index,i) => {
     const audio = new Audio(`/Audio/${letter}.mp3`);
     audio.play();
-    setNoOfTries(noOfTries+1);
+    noOfTries++;
     console.log(noOfTries, word, letter, word[missingIndex]);
     if (letter === word[missingIndex]) {
       const newW = [...w];
       newW[index] = word;
-
-      const newButtonColors = [...buttonColors];
-      newButtonColors[i] = "#14fc03";
-      setButtonColors(newButtonColors);
+      document.getElementById(i).style.backgroundColor = "#14fc03";
       setW(newW);
       setCorrectTries(prevCorrectTries => {
         const newCorrectTries = prevCorrectTries + 1;
@@ -65,12 +56,6 @@ export default function MissingLetterGame() {
     return false;
   };
 
-  const handleNext = () =>{
-    setCorrectTries(0);
-    setIndex(prevIndex => prevIndex + 1);
-    setNextButtonVisible(false);
-  }
-
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 3; j++) {
       singleAlphabet.push(alphabetArr[i][0][j]);
@@ -82,14 +67,14 @@ export default function MissingLetterGame() {
     const correctWord = wordArr[parseInt(i / 3)];
     if(i%3 === 0){
       leftButtons.push(
-        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, 0, correctWord, parseInt(i / 3),i)}>
+        <button key={i} id={i} className="btn letter-button mt-3" onClick={() => checkLetter(letter, 0, correctWord, parseInt(i / 3),i)}>
           {letter}
         </button>
       );
     }
     else{
       leftButtons.push(
-        <button key={i} id={i} className="btn letter-button" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, 0, correctWord, parseInt(i / 3),i)}>
+        <button key={i} id={i} className="btn letter-button" onClick={() => checkLetter(letter, 0, correctWord, parseInt(i / 3),i)}>
           {letter}
         </button>
       );
@@ -103,9 +88,6 @@ export default function MissingLetterGame() {
 
   return (
     <div>
-      <div>
-        <span><h3>Tries : {noOfTries}</h3></span>
-      </div>
     <div className="grid-container mt-2">
       <div className="left-buttons">
         {leftButtons}
@@ -116,7 +98,7 @@ export default function MissingLetterGame() {
       
     </div>
     <div className='nextButton mt-5'>
-      {nextButtonVisible && <button className="btn btn-success next-button" onClick={handleNext}>Next</button>}
+      {nextButtonVisible && <Link type="button" to={`/${parseInt(index)+1}`} className="btn btn-success next-button ">Next</Link>}
     </div>
     </div>
   );
