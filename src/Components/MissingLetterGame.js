@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 export default function MissingLetterGame(props) {
 
   const navigate = useNavigate();
-  let n = props.selectedLevelId;
   const [index, setIndex] = useState(props.selectedSetId);
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
@@ -13,7 +12,7 @@ export default function MissingLetterGame(props) {
   const [noOfTries,setNoOfTries] = useState(0);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [correctTries, setCorrectTries] = useState(0);
-  console.log(correctTries)
+
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
   let singleAlphabet = [];
@@ -27,7 +26,7 @@ export default function MissingLetterGame(props) {
 
 
   useEffect(() => {
-    
+   
     let underWord = [];
     if(index>8){
       for (let i = 0; i < 5; i++) {
@@ -47,26 +46,22 @@ export default function MissingLetterGame(props) {
     // eslint-disable-next-line
   }, [index]);
 
-  if((n===1 && index === 6) || (n===6 && index === 11)){
-    navigate('/end');
-  }
 
   const checkLetter = (letter, word, indexW, i) => {
     const audio = new Audio(`/Audio/${letter}.mp3`);
     audio.play();
     setNoOfTries(noOfTries+1);
-    console.log(noOfTries, word, letter, word[0]);
+
     if ((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) {
       const newW = [...w];
       newW[indexW] = word;
-
+      console.log(correctTries)
       const newButtonColors = [...buttonColors];
       newButtonColors[i] = "#14fc03";
       setButtonColors(newButtonColors);
       setW(newW);
       setCorrectTries(prevCorrectTries => {
         const correctTries = prevCorrectTries + 1;
-        console.log(correctTries)
         if (correctTries === 5) {
           setNextButtonVisible(true);
         }
@@ -77,9 +72,14 @@ export default function MissingLetterGame(props) {
   }
 
   const handleNext = () =>{
+    
     setCorrectTries(0);
     setIndex(prevIndex => prevIndex + 1);
     setNextButtonVisible(false);
+    if ((props.selectedSetId === 1 && index === 5) || (props.selectedSetId === 6 && index === 10)) {
+      navigate('/end');
+    }
+    console.log(props.selectedSetId,index)
   }
 
   const rightClick = (word) => {
