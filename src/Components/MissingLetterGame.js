@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import wordsData from '../words.json';
-import EndPage from './EndPage';
+import { useNavigate } from 'react-router-dom';
 
 export default function MissingLetterGame(props) {
+
+  const navigate = useNavigate();
   let n = props.selectedLevelId;
   const [index, setIndex] = useState(props.selectedSetId);
   const level2Data = wordsData['words'];
@@ -15,7 +17,7 @@ export default function MissingLetterGame(props) {
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
   let singleAlphabet = [];
-  
+
   for (let j in level2Data[index]) {
     wordArr.push(j);
     tempArr.push(level2Data[index][j]);
@@ -26,7 +28,7 @@ export default function MissingLetterGame(props) {
 
   useEffect(() => {
     if((n===1 && index === 6) || (n===6 && index === 11)){
-      <EndPage/>
+      navigate('/end');
     }
     let underWord = [];
     if(index>8){

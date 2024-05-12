@@ -12,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage setSelectedSetId={setSelectedSetId} />} />
         <Route path="/game" element={<MissingLetterGame selectedSetId={selectedSetId} />} />
+        <Route path="/end" element={<EndPage setSelectedSetId={setSelectedSetId} />} />
       </Routes>
     </Router>
   );
