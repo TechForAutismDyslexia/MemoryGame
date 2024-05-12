@@ -27,9 +27,7 @@ export default function MissingLetterGame(props) {
 
 
   useEffect(() => {
-    if((n===1 && index === 6) || (n===6 && index === 11)){
-      navigate('/end');
-    }
+    
     let underWord = [];
     if(index>8){
       for (let i = 0; i < 5; i++) {
@@ -48,6 +46,10 @@ export default function MissingLetterGame(props) {
     setButtonColors(Array(15).fill(''));
     // eslint-disable-next-line
   }, [index]);
+
+  if((n===1 && index === 6) || (n===6 && index === 11)){
+    navigate('/end');
+  }
 
   const checkLetter = (letter, word, indexW, i) => {
     const audio = new Audio(`/Audio/${letter}.mp3`);
