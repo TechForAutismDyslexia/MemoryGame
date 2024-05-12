@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import wordsData from '../words.json';
 
-export default function MissingLetterGame() {
-  const [index, setIndex] = useState(1);
+export default function MissingLetterGame(props) {
+
+  const [index, setIndex] = useState(props.selectedSetId);
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
   const [buttonColors, setButtonColors] = useState(Array(15).fill(''));

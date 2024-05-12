@@ -1,5 +1,6 @@
 body{
-  background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) );
+  /* background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) ); */
+  background-color: rgb(0, 213, 255);
 }
 .grid-container {
     display: flex;
