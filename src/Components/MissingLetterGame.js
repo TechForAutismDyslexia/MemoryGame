@@ -15,6 +15,7 @@ export default function MissingLetterGame(props) {
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
   let singleAlphabet = [];
+  
   for (let j in level2Data[index]) {
     wordArr.push(j);
     tempArr.push(level2Data[index][j]);
@@ -22,7 +23,6 @@ export default function MissingLetterGame(props) {
     tempArr = [];
   }
 
-  
 
   useEffect(() => {
     if((n===1 && index === 6) || (n===6 && index === 11)){
