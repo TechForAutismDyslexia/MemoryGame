@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import wordsData from '../words.json';
 
 export default function MissingLetterGame(props) {
-
+  
   const [index, setIndex] = useState(props.selectedSetId);
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
@@ -10,7 +10,7 @@ export default function MissingLetterGame(props) {
   const [noOfTries,setNoOfTries] = useState(0);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [correctTries, setCorrectTries] = useState(0);
-
+  console.log(correctTries)
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
   let singleAlphabet = [];
@@ -40,6 +40,7 @@ export default function MissingLetterGame(props) {
     }
     setW(underWord);
     setButtonColors(Array(15).fill(''));
+    // eslint-disable-next-line
   }, [index]);
 
   const checkLetter = (letter, word, indexW, i) => {
@@ -56,12 +57,12 @@ export default function MissingLetterGame(props) {
       setButtonColors(newButtonColors);
       setW(newW);
       setCorrectTries(prevCorrectTries => {
-        const newCorrectTries = prevCorrectTries + 1;
-        console.log(newCorrectTries)
-        if (newCorrectTries === 5) {
+        const correctTries = prevCorrectTries + 1;
+        console.log(correctTries)
+        if (correctTries === 5) {
           setNextButtonVisible(true);
         }
-        return newCorrectTries;
+        return correctTries;
       });
       return true;
     } 
