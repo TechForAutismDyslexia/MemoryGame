@@ -31,7 +31,7 @@ export default function HomePage({ setSelectedSetId }) {
               <div className='card-body d-flex flex-column align-items-center'>
                 <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
                 <p style={{ fontSize: '30px' }} className='card-text'>Set B</p>
-                <Link to="/game" onClick={() => handleSetSelection(5)} className='btn btn-lg btn-primary'>Start Game</Link>
+                <Link to="/game" onClick={() => handleSetSelection(6)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
           </div>

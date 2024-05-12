@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import wordsData from '../words.json';
-import LeftButton from './LeftButton';
-import RightButton from './RightButton';
+import EndPage from './EndPage';
 
 export default function MissingLetterGame(props) {
-  
+  let n = props.selectedLevelId;
   const [index, setIndex] = useState(props.selectedSetId);
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
@@ -23,8 +22,12 @@ export default function MissingLetterGame(props) {
     tempArr = [];
   }
 
+  
 
   useEffect(() => {
+    if((n===1 && index === 6) || (n===6 && index === 11)){
+      <EndPage/>
+    }
     let underWord = [];
     if(index>8){
       for (let i = 0; i < 5; i++) {
@@ -89,16 +92,25 @@ export default function MissingLetterGame(props) {
   for (let i = 0; i < 15; i++) {
     const letter = singleAlphabet[i];
     const correctWord = wordArr[parseInt(i / 3)];
-    const onClick = () => checkLetter(letter, correctWord, parseInt(i / 3), i);
-    const backgroundColor = buttonColors[i];
-    const mt = i % 3 === 0;
-    leftButtons.push(
-      <LeftButton key={i} id={i} letter={letter} onClick={onClick} backgroundColor={backgroundColor} mt={mt} />
-    );
+    if(i%3 === 0){
+      leftButtons.push(
+        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, correctWord, parseInt(i / 3),i)}>
+          {letter}
+        </button>
+      );
+    }
+    else{
+      leftButtons.push(
+        <button key={i} id={i} className="btn letter-button" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, correctWord, parseInt(i / 3),i)}>
+          {letter}
+        </button>
+      );
+    }
+    
   }
 
   const rightButtons = w.map((word, i) => (
-    <RightButton key={i} id={i} word={wordArr[i]} onClick={rightClick} />
+    <button key={i} id={`rbutton${i}`} className="btn btn-lg word-button" onClick={()=>rightClick(wordArr[i])}>{word}</button>
   ));
 
   return (
