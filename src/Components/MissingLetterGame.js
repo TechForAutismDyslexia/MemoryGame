@@ -57,8 +57,8 @@ export default function MissingLetterGame(props) {
 
 
   const checkLetter = (letter, word, indexW, i) => {
-    // const audio = new Audio(`/Audio/${letter}.mp3`);
-    // audio.play();
+    const audio = new Audio(`/Audio/${letter}.mp3`);
+    audio.play();
     setNoOfTries(noOfTries+1);
 
     if (((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) && (correctIndex.indexOf(i) === -1)){
