@@ -13,6 +13,8 @@ export default function MissingLetterGame(props) {
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [correctTries, setCorrectTries] = useState(0);
   const [correctIndex, setCorrectIndex] = useState([]);
+  const [startTime, setStartTime] = useState(0);
+  const [startTimer, setStartTimer] = useState(false);
 
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
@@ -25,9 +27,7 @@ export default function MissingLetterGame(props) {
     tempArr = [];
   }
 
-
   useEffect(() => {
-   
     let underWord = [];
     if(index>8){
       for (let i = 0; i < 5; i++) {
@@ -47,10 +47,18 @@ export default function MissingLetterGame(props) {
     // eslint-disable-next-line
   }, [index]);
 
+  const handleTime = () => {
+    if (!startTimer) {
+      setStartTime(new Date());
+      setStartTimer(true);
+      console.log('start');
+    }
+  }
+
 
   const checkLetter = (letter, word, indexW, i) => {
-    const audio = new Audio(`/Audio/${letter}.mp3`);
-    audio.play();
+    // const audio = new Audio(`/Audio/${letter}.mp3`);
+    // audio.play();
     setNoOfTries(noOfTries+1);
 
     if (((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) && (correctIndex.indexOf(i) === -1)){
@@ -82,7 +90,13 @@ export default function MissingLetterGame(props) {
   }
 
   const handleNext = () =>{
-    
+    console.log("end");
+    setStartTimer(false);
+    const endTime = new Date();
+    const timeDiff = (endTime - startTime)/1000;
+    setStartTime(timeDiff)
+    props.setTimer(prevTimer => prevTimer + timeDiff);
+    console.log(props.timer);
     setCorrectTries(0);
     setIndex(prevIndex => prevIndex + 1);
     setNextButtonVisible(false);
@@ -109,7 +123,7 @@ export default function MissingLetterGame(props) {
     const correctWord = wordArr[parseInt(i / 3)];
     if(i%3 === 0){
       leftButtons.push(
-        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, correctWord, parseInt(i / 3),i)}>
+        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => {handleTime();checkLetter(letter, correctWord, parseInt(i / 3),i)}}>
           {letter}
         </button>
       );
