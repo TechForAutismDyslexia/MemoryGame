@@ -56,3 +56,17 @@ body{
   justify-content: center;
   align-items: center;
  }
+
+ @keyframes celebration {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.correct-animation {
+  animation-name: celebration;
+  animation-duration: .4s;
+  animation-iteration-count: 1;
+  background-color: #ffd700;
+  box-shadow: 0 0 10px #00ff15; 
+}

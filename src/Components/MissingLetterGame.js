@@ -12,6 +12,7 @@ export default function MissingLetterGame(props) {
   const [noOfTries,setNoOfTries] = useState(0);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [correctTries, setCorrectTries] = useState(0);
+  const [correctIndex, setCorrectIndex] = useState([]);
 
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
@@ -52,7 +53,8 @@ export default function MissingLetterGame(props) {
     audio.play();
     setNoOfTries(noOfTries+1);
 
-    if ((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) {
+    if (((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) && (correctIndex.indexOf(i) === -1)){
+      setCorrectIndex([...correctIndex, i]);
       const newW = [...w];
       newW[indexW] = word;
       console.log(correctTries)
@@ -67,6 +69,14 @@ export default function MissingLetterGame(props) {
         }
         return correctTries;
       });
+      const button = document.getElementById(i);
+    button.classList.add('correct-animation');
+
+    setTimeout(() => {
+      button.classList.remove('correct-animation');
+    }, 1000);
+
+
       return true;
     } 
   }
@@ -76,10 +86,11 @@ export default function MissingLetterGame(props) {
     setCorrectTries(0);
     setIndex(prevIndex => prevIndex + 1);
     setNextButtonVisible(false);
+    setCorrectIndex([]);
+    props.setTries(noOfTries);
     if ((props.selectedSetId === 1 && index === 5) || (props.selectedSetId === 6 && index === 10)) {
       navigate('/end');
     }
-    console.log(props.selectedSetId,index)
   }
 
   const rightClick = (word) => {
@@ -129,11 +140,12 @@ export default function MissingLetterGame(props) {
       <div className="right-buttons">
         {rightButtons}
       </div>
-      
     </div>
     <div className='nextButton mt-5'>
-      {nextButtonVisible && <button className="btn btn-success next-button" onClick={handleNext}>Next</button>}
+    <button className="btn btn-lg btn-danger me-5" onClick={()=>navigate('/')} style={{float:'right'}}>Exit</button>
+      {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
     </div>
+    <div style={{ marginBottom: '50px' }}></div>
     </div>
   );
 }
