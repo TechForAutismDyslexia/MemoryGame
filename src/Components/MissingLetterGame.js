@@ -65,8 +65,11 @@ export default function MissingLetterGame(props) {
 
     if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) && (correctIndex.indexOf(i) === -1)) {
       setTimeout(() => {
-        rightClick(wordArr[indexW]);
+        eachLetter(wordArr[indexW]);
       }, 1000);
+      setTimeout(() => {
+        rightClick(wordArr[indexW]);
+      }, 2500);
 
       setCorrectIndex([...correctIndex, i]);
       const newW = [...w];
@@ -116,6 +119,10 @@ export default function MissingLetterGame(props) {
 
   const rightClick = (word) => {
     const audio = new Audio(`/Audio/${word}.mp3`);
+    audio.play();
+  }
+  const eachLetter = (word) => {
+    const audio = new Audio(`/EachAudio/${word}.mp3`);
     audio.play();
   }
 
