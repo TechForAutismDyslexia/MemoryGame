@@ -9,7 +9,7 @@ export default function MissingLetterGame(props) {
   const level2Data = wordsData['words'];
   const [w, setW] = useState([]);
   const [buttonColors, setButtonColors] = useState(Array(15).fill(''));
-  const [noOfTries,setNoOfTries] = useState(0);
+  const [noOfTries, setNoOfTries] = useState(0);
   const [nextButtonVisible, setNextButtonVisible] = useState(false);
   const [correctTries, setCorrectTries] = useState(0);
   const [correctIndex, setCorrectIndex] = useState([]);
@@ -29,7 +29,7 @@ export default function MissingLetterGame(props) {
 
   useEffect(() => {
     let underWord = [];
-    if(index>8){
+    if (index > 8) {
       for (let i = 0; i < 5; i++) {
         let modifyWord = wordArr[i];
         modifyWord = modifyWord.replace(wordArr[i][0], "_");
@@ -37,7 +37,7 @@ export default function MissingLetterGame(props) {
         underWord.push(modifyWord);
       }
     }
-    else{
+    else {
       for (let i = 0; i < 5; i++) {
         underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
       }
@@ -56,12 +56,18 @@ export default function MissingLetterGame(props) {
   }
 
 
-  const checkLetter = (letter, word, indexW, i) => {
-   
-    setNoOfTries(noOfTries+1);
+  const checkLetter = async (letter, word, indexW, i) => {
 
-    if (((index<9 && letter === word[0]) || (index>8 && letter === word.slice(0,2))) && (correctIndex.indexOf(i) === -1)){
-      rightClick(wordArr[indexW]);
+    setNoOfTries(noOfTries + 1);
+
+    const audio = new Audio(`/Audio/${letter}.mp3`);
+    await audio.play();
+
+    if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) && (correctIndex.indexOf(i) === -1)) {
+      setTimeout(() => {
+        rightClick(wordArr[indexW]);
+      }, 1000);
+
       setCorrectIndex([...correctIndex, i]);
       const newW = [...w];
       newW[indexW] = word;
@@ -78,24 +84,23 @@ export default function MissingLetterGame(props) {
         return correctTries;
       });
       const button = document.getElementById(i);
-    button.classList.add('correct-animation');
+      button.classList.add('correct-animation');
 
-    setTimeout(() => {
-      button.classList.remove('correct-animation');
-    }, 1000);
+      setTimeout(() => {
+        button.classList.remove('correct-animation');
+      }, 1000);
 
 
       return true;
-    } 
-     const audio = new Audio(`/Audio/${letter}.mp3`);
-    audio.play();
+    }
+
   }
 
-  const handleNext = () =>{
+  const handleNext = () => {
     console.log("end");
     setStartTimer(false);
     const endTime = new Date();
-    const timeDiff = (endTime - startTime)/1000;
+    const timeDiff = (endTime - startTime) / 1000;
     setStartTime(timeDiff)
     props.setTimer(prevTimer => prevTimer + timeDiff);
     console.log(props.timer);
@@ -123,45 +128,53 @@ export default function MissingLetterGame(props) {
   for (let i = 0; i < 15; i++) {
     const letter = singleAlphabet[i];
     const correctWord = wordArr[parseInt(i / 3)];
-    if(i%3 === 0){
+    if (i % 3 === 0) {
       leftButtons.push(
-        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => {handleTime();checkLetter(letter, correctWord, parseInt(i / 3),i)}}>
+        <button key={i} id={i} className="btn letter-button mt-3" style={{ backgroundColor: buttonColors[i] }} onClick={() => { handleTime(); checkLetter(letter, correctWord, parseInt(i / 3), i) }}>
           {letter}
         </button>
       );
     }
-    else{
+    else {
       leftButtons.push(
-        <button key={i} id={i} className="btn letter-button" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, correctWord, parseInt(i / 3),i)}>
+        <button key={i} id={i} className="btn letter-button" style={{ backgroundColor: buttonColors[i] }} onClick={() => checkLetter(letter, correctWord, parseInt(i / 3), i)}>
           {letter}
         </button>
       );
     }
-    
+
   }
 
   const rightButtons = w.map((word, i) => (
-    <button key={i} id={`rbutton${i}`} className="btn btn-lg word-button" onClick={()=>rightClick(wordArr[i])}>{word}</button>
+    <button key={i} id={`rbutton${i}`} className="btn btn-lg word-button" onClick={() => rightClick(wordArr[i])}>{word}</button>
   ));
 
   return (
     <div>
-      <div>
-        <span><h3>Tries : {noOfTries}</h3></span>
+      <div className="d-flex mt-3">
+        <div>
+          <span><h3>Tries : {noOfTries}</h3></span>
+        </div>
+        <div className='flex-grow-1 d-flex justify-content-center'>
+          <div className="alert alert-warning" role="alert">
+            Make sure to turn on the volume
+          </div>
+        </div>
       </div>
-    <div className="grid-container mt-2">
-      <div className="left-buttons">
-        {leftButtons}
+    
+      <div className="grid-container mt-2">
+        <div className="left-buttons">
+          {leftButtons}
+        </div>
+        <div className="right-buttons">
+          {rightButtons}
+        </div>
       </div>
-      <div className="right-buttons">
-        {rightButtons}
+      <div className='nextButton mt-5'>
+        <button className="btn btn-lg btn-danger me-5" onClick={() => navigate('/')} style={{ float: 'right' }}>Exit</button>
+        {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
       </div>
-    </div>
-    <div className='nextButton mt-5'>
-    <button className="btn btn-lg btn-danger me-5" onClick={()=>navigate('/')} style={{float:'right'}}>Exit</button>
-      {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
-    </div>
-    <div style={{ marginBottom: '50px' }}></div>
+      <div style={{ marginBottom: '50px' }}></div>
     </div>
   );
 }

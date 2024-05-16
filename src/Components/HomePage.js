@@ -20,8 +20,12 @@ export default function HomePage({ setSelectedSetId }) {
           <div className='col-md-6'>
             <div className='card mb-3 ' style={{ borderRadius: '55px' }}>
               <div className='card-body d-flex flex-column align-items-center'>
-                <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
-                <p style={{ fontSize: '30px' }} className='card-text'>Set A</p>
+                <Link to="/game" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
+                </Link>
+                <Link to="/game" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <p style={{ fontSize: '30px' }} className='card-text'>Set A</p>
+                </Link>
                 <Link to="/game" onClick={() => handleSetSelection(1)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
@@ -29,8 +33,13 @@ export default function HomePage({ setSelectedSetId }) {
           <div className='col-md-6'>
             <div className='card mb-3' style={{ borderRadius: '55px' }}>
               <div className='card-body d-flex flex-column align-items-center'>
-                <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
-                <p style={{ fontSize: '30px' }} className='card-text'>Set B</p>
+                <Link to="/game" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
+                </Link>
+                <Link to="/game" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <p style={{ fontSize: '30px' }} className='card-text'>Set B</p>
+                </Link>
+                
                 <Link to="/game" onClick={() => handleSetSelection(6)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
