@@ -85,6 +85,11 @@ export default function MissingLetterGame(props) {
         const correctTries = prevCorrectTries + 1;
         if (correctTries === 5) {
           setNextButtonVisible(true);
+          setShowConfetti(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+    }
+      , 5000);
 
         }
         return correctTries;
@@ -103,11 +108,7 @@ export default function MissingLetterGame(props) {
   }
 
   const handleNext = () => {
-    setShowConfetti(true);
-    setTimeout(() => {
-      setShowConfetti(false);
-    }
-      , 5000);
+    
     setStartTimer(false);
     const endTime = new Date();
     const timeDiff = (endTime - startTime) / 1000;
