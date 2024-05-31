@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import wordsData from '../words.json';
 import { useNavigate } from 'react-router-dom';
+import Confetti from 'react-confetti';
 
 export default function MissingLetterGame(props) {
 
@@ -15,6 +16,7 @@ export default function MissingLetterGame(props) {
   const [correctIndex, setCorrectIndex] = useState([]);
   const [startTime, setStartTime] = useState(0);
   const [startTimer, setStartTimer] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   let wordArr = [], alphabetArr = [], tempArr = [];
   const leftButtons = [];
@@ -83,6 +85,7 @@ export default function MissingLetterGame(props) {
         const correctTries = prevCorrectTries + 1;
         if (correctTries === 5) {
           setNextButtonVisible(true);
+
         }
         return correctTries;
       });
@@ -100,7 +103,11 @@ export default function MissingLetterGame(props) {
   }
 
   const handleNext = () => {
-    console.log("end");
+    setShowConfetti(true);
+    setTimeout(() => {
+      setShowConfetti(false);
+    }
+      , 5000);
     setStartTimer(false);
     const endTime = new Date();
     const timeDiff = (endTime - startTime) / 1000;
@@ -168,7 +175,7 @@ export default function MissingLetterGame(props) {
           </div>
         </div>
       </div>
-    
+
       <div className="grid-container mt-2">
         <div className="left-buttons">
           {leftButtons}
@@ -182,6 +189,7 @@ export default function MissingLetterGame(props) {
         {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
       </div>
       <div style={{ marginBottom: '50px' }}></div>
+      {showConfetti && <Confetti />}
     </div>
   );
 }
