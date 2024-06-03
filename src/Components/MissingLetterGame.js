@@ -153,7 +153,6 @@ export default function MissingLetterGame() {
           key={letterIndex}
           id={letterIndex}
           className="btn letter-button p-3"
-          style={{ backgroundColor: buttonColors[letterIndex] }}
           onClick={() => { handleTime(); checkLetter(letter, correctWord, i, letterIndex); }}
         >
           {letter}
