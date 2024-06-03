@@ -152,7 +152,7 @@ export default function MissingLetterGame() {
         <button
           key={letterIndex}
           id={letterIndex}
-          className="btn letter-button p-3"
+          className="btn letter-button p-3 mb-3"
           onClick={() => { handleTime(); checkLetter(letter, correctWord, i, letterIndex); }}
         >
           {letter}
@@ -173,6 +173,7 @@ export default function MissingLetterGame() {
 
   return (
     <div>
+      <h1 className="text-center mt-3 mb-4">Find the Missing Letters</h1>
       <div className="d-flex mt-3">
         <div>
           <span><h3>Tries : {noOfTries}</h3></span>

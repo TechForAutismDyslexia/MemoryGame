@@ -4,12 +4,13 @@
     padding: 10px;
     width: 75%;
     max-width: 400px;
-  margin: 10px auto; 
-  border-radius: 30px;
+    margin: 10px auto; 
+    border-radius: 30px;
   }
- 
+  
   .button-group-vertical{
     display: flex;
     flex-direction: column;
     margin-right: 50px;
+    margin-top: 10px;
   }
