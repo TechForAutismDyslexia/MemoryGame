@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { GameContext } from './GameContext.js';
 
-export default function HomePage({ setSelectedSetId }) {
+export default function HomePage() {
+  const { setSelectedSetId } = useContext(GameContext);
+
   const handleSetSelection = (setId) => {
     setSelectedSetId(setId);
   };
@@ -39,7 +42,6 @@ export default function HomePage({ setSelectedSetId }) {
                 <Link to="/game" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <p style={{ fontSize: '30px' }} className='card-text'>Set B</p>
                 </Link>
-                
                 <Link to="/game" onClick={() => handleSetSelection(6)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
