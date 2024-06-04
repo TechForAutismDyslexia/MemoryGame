@@ -191,7 +191,7 @@ export default function MissingLetterGame() {
         <div className='ms-auto'>
           <div className='d-flex'>
 
-            <button type="button" class="btn btn-warning me-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Make sure to turn up the volume!">
+            <button type="button" className="btn btn-warning me-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Make sure to turn up the volume!">
               Instructions
             </button>
             <svg xmlns="http://www.w3.org/2000/svg" onClick={instructions} width="35" height="35" fill="yellow" class="bi bi-play-circle-fill me-5" viewBox="0 0 16 16">
