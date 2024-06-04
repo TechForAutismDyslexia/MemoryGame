@@ -3,7 +3,8 @@ import wordsData from '../words.json';
 import { useNavigate } from 'react-router-dom';
 import Confetti from 'react-confetti';
 import { GameContext } from './GameContext.js';
-import './styles.css'; 
+import './styles.css';
+import { Popover } from 'bootstrap';
 
 export default function MissingLetterGame() {
   const navigate = useNavigate();
@@ -14,6 +15,9 @@ export default function MissingLetterGame() {
       navigate('/');
     }
   }, [selectedSetId, navigate]);
+
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new Popover(popoverTriggerEl))
 
   const [index, setIndex] = useState(selectedSetId || 0);
   const level2Data = wordsData['words'];
@@ -63,6 +67,11 @@ export default function MissingLetterGame() {
       console.log('start');
     }
   };
+
+  const instructions = () => {
+    const audio = new Audio('/instructions.wav');
+    audio.play();
+  }
 
   const checkLetter = async (letter, word, indexW, i) => {
     setNoOfTries(noOfTries + 1);
@@ -154,6 +163,7 @@ export default function MissingLetterGame() {
           id={letterIndex}
           className="btn letter-button p-3 mb-3"
           onClick={() => { handleTime(); checkLetter(letter, correctWord, i, letterIndex); }}
+          style={{ backgroundColor: buttonColors[letterIndex] }}
         >
           {letter}
         </button>
@@ -178,9 +188,15 @@ export default function MissingLetterGame() {
         <div>
           <span><h3>Tries : {noOfTries}</h3></span>
         </div>
-        <div className='flex-grow-1 d-flex justify-content-center'>
-          <div className="alert alert-warning" role="alert">
-            Make sure to turn on the volume
+        <div className='ms-auto'>
+          <div className='d-flex'>
+
+            <button type="button" class="btn btn-warning me-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Make sure to turn up the volume!">
+              Instructions
+            </button>
+            <svg xmlns="http://www.w3.org/2000/svg" onClick={instructions} width="35" height="35" fill="yellow" class="bi bi-play-circle-fill me-5" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z" />
+            </svg>
           </div>
         </div>
       </div>
@@ -189,7 +205,7 @@ export default function MissingLetterGame() {
         {groupedButtons}
       </div>
       <div className='nextButton mt-5'>
-        <button className="btn btn-lg btn-danger me-5" onClick={() => navigate('/')} style={{ float: 'right' }}>Exit</button>
+        <button className="btn btn-lg btn-danger me-5" onClick={() => navigate('/')} >Exit</button>
         {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
       </div>
       <div style={{ marginBottom: '50px' }}></div>

@@ -1,66 +1,75 @@
-body{
+body {
   /* background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) ); */
   background-color: rgb(0, 213, 255);
 }
+
 .grid-container {
-    display: flex;
-    justify-content: center; 
-  }
-  
-  .grid-container > div {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    justify-content: center; 
-    align-items: center;
-    grid-gap: 10px;
-  }
+  display: flex;
+  justify-content: center;
+}
 
-  .left-buttons {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .right-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    margin-left: 15vw;
-  }
-  
-  .letter-button {
-    background-color: rgb(255, 215, 0);
-    font-size: 25px;
-    font-weight: bold;
-    border-radius: 30px;
-  }
+.grid-container>div {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+}
 
-  .letter-button:hover {
-    background-color: rgb(255, 215, 0);
-  }
-  
-  .word-button {
-    background-color: rgb(255, 165, 0);
-    margin: 5px;
-    font-size: 25px;
-    font-weight: bold;
-    border-radius: 50px;
-  }
+.left-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .word-button:hover {
-    background-color: rgb(255, 165, 0);
-  }
-  
-  
- .nextButton{
+.right-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  margin-left: 15vw;
+}
+
+.letter-button {
+  background-color: rgb(255, 215, 0);
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 30px;
+}
+
+.letter-button:hover {
+  background-color: rgb(255, 215, 0);
+}
+
+.word-button {
+  background-color: rgb(255, 165, 0);
+  margin: 5px;
+  font-size: 25px;
+  font-weight: bold;
+  border-radius: 50px;
+}
+
+.word-button:hover {
+  background-color: rgb(255, 165, 0);
+}
+
+
+.nextButton {
   display: flex;
   justify-content: center;
   align-items: center;
- }
+}
 
- @keyframes celebration {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+@keyframes celebration {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .correct-animation {
@@ -68,7 +77,7 @@ body{
   animation-duration: .4s;
   animation-iteration-count: 1;
   background-color: #ffd700;
-  box-shadow: 0 0 10px #00ff15; 
+  box-shadow: 0 0 10px #00ff15;
 }
 
 
