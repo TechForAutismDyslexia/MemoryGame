@@ -30,7 +30,9 @@ export default function EndPage() {
             <div className='d-flex align-items-center justify-content-center'>
               <p style={{ fontSize: '2rem' }}>Total Time: {timer.toFixed(2)} seconds</p>
             </div>
-            <Link type="button" className='btn btn-primary' to="/">Return to Home</Link>
+            <div className='d-flex align-items-center justify-content-center'>
+              <Link type="button" className='btn btn-primary' to="/">Return to Home</Link>
+            </div>
           </div>
         </div>
       </div>
