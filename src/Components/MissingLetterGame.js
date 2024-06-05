@@ -17,6 +17,7 @@ export default function MissingLetterGame() {
   }, [selectedSetId, navigate]);
 
   const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+  // eslint-disable-next-line
   const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new Popover(popoverTriggerEl))
 
   const [index, setIndex] = useState(selectedSetId || 0);
@@ -183,13 +184,14 @@ export default function MissingLetterGame() {
 
   return (
     <div>
-      <h1 className="text-center mt-3 mb-4">Find the Missing Letters</h1>
-      <div className="d-flex mt-3">
+      <div className='outerDiv'>
+      <h1 className="text-center mt-5">Find the Missing Letters</h1>
+      <div className="d-flex justify-content-between mt-5 inst">
         <div>
           <span><h3>Tries : {noOfTries}</h3></span>
         </div>
-        <div className='ms-auto'>
-          <div className='d-flex'>
+        <div className='ms-5 instruction-container'>
+          <div className='d-flex justify-content-center'>
 
             <button type="button" className="btn btn-warning me-3" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Make sure to turn up the volume!">
               Instructions
@@ -210,6 +212,7 @@ export default function MissingLetterGame() {
       </div>
       <div style={{ marginBottom: '50px' }}></div>
       {showConfetti && <Confetti />}
+      </div>
     </div>
   );
 }

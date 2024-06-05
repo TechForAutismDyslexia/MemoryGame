@@ -1,7 +1,26 @@
-body {
-  /* background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) ); */
+@import url('https://fonts.googleapis.com/css2?family=OpenDyslexic&display=swap');
+/* body {
+  background : linear-gradient(90deg, rgb(122, 118, 199), #41b4c9 55%, rgba(0,212,255,1) );
+  background-color: rgb(0, 213, 255);   
+} */
+/* background-color: rgb(0, 213, 255);   */
+
+body{
   background-color: rgb(0, 213, 255);
+  font-family: 'OpenDyslexic', sans-serif;
 }
+
+.inst {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.inst > div {
+  flex: 1;
+  text-align: center;
+}
+
 
 .grid-container {
   display: flex;
@@ -94,3 +113,4 @@ body {
   font-size: 24px;
   margin-bottom: 20px;
 }
+

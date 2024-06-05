@@ -10,7 +10,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className='d-flex align-items-center justify-content-center'>
+    <div className='d-flex align-items-center justify-content-center home'>
       <div className='container'>
         <div className='row'>
           <div className='col-12'>
