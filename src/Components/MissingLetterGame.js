@@ -115,6 +115,11 @@
 
         return true;
       }
+      else{
+        const newButtonColors = [...buttonColors];
+        newButtonColors[i] = "#FF3131";
+        setButtonColors(newButtonColors);
+      }
     };
 
     const handleNext = () => {
