@@ -115,10 +115,13 @@
 
         return true;
       }
-      else{
-        const newButtonColors = [...buttonColors];
-        newButtonColors[i] = "#FF3131";
-        setButtonColors(newButtonColors);
+      else {
+        const button = document.getElementById(i);
+        button.classList.add('incorrect-animation');
+  
+        setTimeout(() => {
+          button.classList.remove('incorrect-animation');
+        }, 2000);
       }
     };
 
