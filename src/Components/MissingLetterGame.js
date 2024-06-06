@@ -29,7 +29,7 @@
     const [correctIndex, setCorrectIndex] = useState([]);
     const [startTime, setStartTime] = useState(0);
     const [startTimer, setStartTimer] = useState(false);
-    const [showConfetti, setShowConfetti] = useState(false);
+    const [showConfetti, setShowConfetti] = useState(false)
 
     let wordArr = [], alphabetArr = [], tempArr = [];
     let singleAlphabet = [];
