@@ -79,7 +79,8 @@
       const audio = new Audio(`/Audio/${letter}.mp3`);
       await audio.play();
 
-      if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) && (correctIndex.indexOf(i) === -1)) {
+      if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) 
+        && (correctIndex.indexOf(i) === -1)) {
         setTimeout(() => {
           eachLetter(wordArr[indexW]);
         }, 1000);
@@ -170,7 +171,7 @@
         buttonGroup.push(
           <button
             key={letterIndex}
-            id={letterIndex}
+            id={letterIndex}  
             className="btn letter-button p-3 mb-3"
             onClick={() => { handleTime(); checkLetter(letter, correctWord, i, letterIndex); }}
             style={{ backgroundColor: buttonColors[letterIndex] }}
