@@ -7,7 +7,7 @@
 
   export default function MissingLetterGame() {
     const navigate = useNavigate();
-    const { selectedSetId, setTries, timer, setTimer } = useContext(GameContext);
+    const { selectedSetId, setTries, setTimer } = useContext(GameContext);
 
     useEffect(() => {
       if (selectedSetId === null) {
@@ -27,8 +27,7 @@
     const [nextButtonVisible, setNextButtonVisible] = useState(false);
     const [correctTries, setCorrectTries] = useState(0);
     const [correctIndex, setCorrectIndex] = useState([]);
-    const [startTime, setStartTime] = useState(0);
-    const [startTimer, setStartTimer] = useState(false);
+    const [startTime, setStartTime] = useState(new Date());
     const [showConfetti, setShowConfetti] = useState(false)
 
     let wordArr = [], alphabetArr = [], tempArr = [];
@@ -60,13 +59,13 @@
       // eslint-disable-next-line
     }, [index]);
 
-    const handleTime = () => {
-      if (!startTimer) {
-        setStartTime(new Date());
-        setStartTimer(true);
-        console.log('start');
-      }
-    };
+    // const handleTime = () => {
+    //   if (!startTimer) {
+    //     setStartTime(new Date());
+    //     setStartTimer(true);
+    //     console.log('start');
+    //   }
+    // };
 
     const instructions = () => {
       const audio = new Audio('/instructions.wav');
@@ -129,18 +128,21 @@
     const handleNext = () => {
       const audio = new Audio('/GoodJob.wav');
       audio.play();
-      setStartTimer(false);
-      const endTime = new Date();
-      const timeDiff = (endTime - startTime) / 1000;
-      setStartTime(timeDiff);
-      setTimer(prevTimer => prevTimer + timeDiff);
-      console.log(timer);
+      // setStartTimer(false);
+      // const endTime = new Date();
+      // const timeDiff = (endTime - startTime) / 1000;
+      // setStartTime(timeDiff);
+      // setTimer(prevTimer => prevTimer + timeDiff);
+      // console.log(timer);
       setCorrectTries(0);
       setIndex(prevIndex => prevIndex + 1);
       setNextButtonVisible(false);
       setCorrectIndex([]);
       setTries(noOfTries);
       if ((selectedSetId === 1 && index === 5) || (selectedSetId === 6 && index === 10)) {
+        const endTime = new Date();
+        const timeDiff = (endTime - startTime) / 1000;
+        setTimer(timeDiff);
         navigate('/end');
       }
     };
@@ -173,7 +175,7 @@
             key={letterIndex}
             id={letterIndex}  
             className="btn letter-button p-3 mb-3"
-            onClick={() => { handleTime(); checkLetter(letter, correctWord, i, letterIndex); }}
+            onClick={() => { checkLetter(letter, correctWord, i, letterIndex); }}
             style={{ backgroundColor: buttonColors[letterIndex] }}
           >
             {letter}

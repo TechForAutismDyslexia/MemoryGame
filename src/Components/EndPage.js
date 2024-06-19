@@ -21,9 +21,7 @@ export default function EndPage() {
             <div className='d-flex align-items-center justify-content-center' style={{ marginTop: '3rem' }}>
               <p style={{ fontSize: '4rem' }}>Game Over</p>
             </div>
-            <div className='d-flex align-items-center justify-content-center'>
-              <p style={{ fontSize: '2rem' }}>Selected Set: {selectedSetId}</p>
-            </div>
+
             <div className='d-flex align-items-center justify-content-center'>
               <p style={{ fontSize: '2rem' }}>Total Tries: {tries}</p>
             </div>
