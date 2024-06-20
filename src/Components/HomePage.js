@@ -4,6 +4,7 @@ import { GameContext } from './GameContext.js';
 
 export default function HomePage() {
   const { setSelectedSetId } = useContext(GameContext);
+  
 
   const handleSetSelection = (setId) => {
     setSelectedSetId(setId);

@@ -27,6 +27,7 @@
     const [nextButtonVisible, setNextButtonVisible] = useState(false);
     const [correctTries, setCorrectTries] = useState(0);
     const [correctIndex, setCorrectIndex] = useState([]);
+    // eslint-disable-next-line
     const [startTime, setStartTime] = useState(new Date());
     const [showConfetti, setShowConfetti] = useState(false)
 
@@ -128,6 +129,7 @@
     const handleNext = () => {
       const audio = new Audio('/GoodJob.wav');
       audio.play();
+      window.scrollTo(0, 160);
       // setStartTimer(false);
       // const endTime = new Date();
       // const timeDiff = (endTime - startTime) / 1000;
