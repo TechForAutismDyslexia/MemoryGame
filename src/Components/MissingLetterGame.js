@@ -1,208 +1,197 @@
-  import React, { useState, useEffect, useContext } from 'react';
-  import wordsData from '../words.json';
-  import { useNavigate } from 'react-router-dom';
-  import Confetti from 'react-confetti';
-  import { GameContext } from './GameContext.js';
-  import { Popover } from 'bootstrap';
+import React, { useState, useEffect, useContext } from 'react';
+import wordsData from '../words.json';
+import { useNavigate } from 'react-router-dom';
+import Confetti from 'react-confetti';
+import { GameContext } from './GameContext.js';
+import { Popover } from 'bootstrap';
 
-  export default function MissingLetterGame() {
-    const navigate = useNavigate();
-    const { selectedSetId, setTries, setTimer } = useContext(GameContext);
+export default function MissingLetterGame() {
+  const navigate = useNavigate();
+  const { selectedSetId, setTries, setTimer } = useContext(GameContext);
 
-    useEffect(() => {
-      if (selectedSetId === null) {
-        navigate('/');
+  useEffect(() => {
+    if (selectedSetId === null) {
+      navigate('/');
+    }
+  }, [selectedSetId, navigate]);
+
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+  // eslint-disable-next-line
+  const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new Popover(popoverTriggerEl));
+
+  const [index, setIndex] = useState(selectedSetId || 0);
+  const level2Data = wordsData['words'];
+  const [w, setW] = useState([]);
+  const [buttonColors, setButtonColors] = useState(Array(15).fill(''));
+  const [noOfTries, setNoOfTries] = useState(0);
+  const [nextButtonVisible, setNextButtonVisible] = useState(false);
+  const [correctTries, setCorrectTries] = useState(0);
+  const [correctIndex, setCorrectIndex] = useState([]);
+  // eslint-disable-next-line
+  const [startTime, setStartTime] = useState(new Date());
+  const [showConfetti, setShowConfetti] = useState(false);
+
+  let wordArr = [], alphabetArr = [], tempArr = [];
+  let singleAlphabet = [];
+
+  for (let j in level2Data[index]) {
+    wordArr.push(j);
+    tempArr.push(level2Data[index][j]);
+    alphabetArr.push(tempArr);
+    tempArr = [];
+  }
+
+  useEffect(() => {
+    let underWord = [];
+    if (index > 8) {
+      for (let i = 0; i < 5; i++) {
+        let modifyWord = wordArr[i];
+        modifyWord = modifyWord.replace(wordArr[i][0], "_");
+        modifyWord = modifyWord.replace(wordArr[i][1], "_");
+        underWord.push(modifyWord);
       }
-    }, [selectedSetId, navigate]);
-
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    } else {
+      for (let i = 0; i < 5; i++) {
+        underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
+      }
+    }
+    setW(underWord);
+    setButtonColors(Array(15).fill(''));
     // eslint-disable-next-line
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new Popover(popoverTriggerEl))
+  }, [index]);
 
-    const [index, setIndex] = useState(selectedSetId || 0);
-    const level2Data = wordsData['words'];
-    const [w, setW] = useState([]);
-    const [buttonColors, setButtonColors] = useState(Array(15).fill(''));
-    const [noOfTries, setNoOfTries] = useState(0);
-    const [nextButtonVisible, setNextButtonVisible] = useState(false);
-    const [correctTries, setCorrectTries] = useState(0);
-    const [correctIndex, setCorrectIndex] = useState([]);
-    // eslint-disable-next-line
-    const [startTime, setStartTime] = useState(new Date());
-    const [showConfetti, setShowConfetti] = useState(false)
+  const importAudio = async (word) => {
+    const { default: audio } = await import(`../assets/EachAudio/${word}.mp3`);
+    return audio;
+  };
 
-    let wordArr = [], alphabetArr = [], tempArr = [];
-    let singleAlphabet = [];
+  const playAudio = async (word) => {
+    const audio = await importAudio(word);
+    const real = new Audio(audio);
+    await real.play();
+  };
 
-    for (let j in level2Data[index]) {
-      wordArr.push(j);
-      tempArr.push(level2Data[index][j]);
-      alphabetArr.push(tempArr);
-      tempArr = [];
-    }
+  const speechSynthesis = (word) => {
+    const synth = window.speechSynthesis;
+    const utterThis = new SpeechSynthesisUtterance(word);
+    synth.speak(utterThis);
+  };
 
-    useEffect(() => {
-      let underWord = [];
-      if (index > 8) {
-        for (let i = 0; i < 5; i++) {
-          let modifyWord = wordArr[i];
-          modifyWord = modifyWord.replace(wordArr[i][0], "_");
-          modifyWord = modifyWord.replace(wordArr[i][1], "_");
-          underWord.push(modifyWord);
+
+  const instructions = () => {
+    playAudio("instructions");
+  };
+
+  const checkLetter = async (letter, word, indexW, i) => {
+    setNoOfTries(noOfTries + 1);
+    speechSynthesis(letter);
+
+    if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) &&
+      (correctIndex.indexOf(i) === -1)) {
+      setTimeout(() => {
+        playAudio(wordArr[indexW]);
+      }, 1000);
+      setTimeout(() => {
+        speechSynthesis(wordArr[indexW]);
+      }, 2000);
+
+      setCorrectIndex([...correctIndex, i]);
+      const newW = [...w];
+      newW[indexW] = word;
+      const newButtonColors = [...buttonColors];
+      newButtonColors[i] = "#14fc03";
+      setButtonColors(newButtonColors);
+      setW(newW);
+      setCorrectTries(prevCorrectTries => {
+        const correctTries = prevCorrectTries + 1;
+        if (correctTries === 5) {
+          setNextButtonVisible(true);
+          setShowConfetti(true);
+          setTimeout(() => {
+            setShowConfetti(false);
+          }, 5000);
         }
-      } else {
-        for (let i = 0; i < 5; i++) {
-          underWord.push(wordArr[i].replace(wordArr[i][0], "_"));
-        }
-      }
-      setW(underWord);
-      setButtonColors(Array(15).fill(''));
-      // eslint-disable-next-line
-    }, [index]);
+        return correctTries;
+      });
+      const button = document.getElementById(i);
+      button.classList.add('correct-animation');
 
-    // const handleTime = () => {
-    //   if (!startTimer) {
-    //     setStartTime(new Date());
-    //     setStartTimer(true);
-    //     console.log('start');
-    //   }
-    // };
+      setTimeout(() => {
+        button.classList.remove('correct-animation');
+      }, 1000);
 
-    const instructions = () => {
-      const audio = new Audio('/instructions.wav');
-      audio.play();
+      return true;
+    } else {
+      const button = document.getElementById(i);
+      button.classList.add('incorrect-animation');
+
+      setTimeout(() => {
+        button.classList.remove('incorrect-animation');
+      }, 2000);
     }
+  };
 
-    const checkLetter = async (letter, word, indexW, i) => {
-      setNoOfTries(noOfTries + 1);
-
-      const audio = new Audio(`/Audio/${letter}.mp3`);
-      await audio.play();
-
-      if (((index < 9 && letter === word[0]) || (index > 8 && letter === word.slice(0, 2))) 
-        && (correctIndex.indexOf(i) === -1)) {
-        setTimeout(() => {
-          eachLetter(wordArr[indexW]);
-        }, 1000);
-        setTimeout(() => {
-          rightClick(wordArr[indexW]);
-        }, 2500);
-
-        setCorrectIndex([...correctIndex, i]);
-        const newW = [...w];
-        newW[indexW] = word;
-        console.log(correctTries);
-        const newButtonColors = [...buttonColors];
-        newButtonColors[i] = "#14fc03";
-        setButtonColors(newButtonColors);
-        setW(newW);
-        setCorrectTries(prevCorrectTries => {
-          const correctTries = prevCorrectTries + 1;
-          if (correctTries === 5) {
-            setNextButtonVisible(true);
-            setShowConfetti(true);
-            setTimeout(() => {
-              setShowConfetti(false);
-            }, 5000);
-          }
-          return correctTries;
-        });
-        const button = document.getElementById(i);
-        button.classList.add('correct-animation');
-
-        setTimeout(() => {
-          button.classList.remove('correct-animation');
-        }, 1000);
-
-        return true;
-      }
-      else {
-        const button = document.getElementById(i);
-        button.classList.add('incorrect-animation');
-  
-        setTimeout(() => {
-          button.classList.remove('incorrect-animation');
-        }, 2000);
-      }
-    };
-
-    const handleNext = () => {
-      const audio = new Audio('/GoodJob.wav');
-      audio.play();
-      window.scrollTo(0, 160);
-      // setStartTimer(false);
-      // const endTime = new Date();
-      // const timeDiff = (endTime - startTime) / 1000;
-      // setStartTime(timeDiff);
-      // setTimer(prevTimer => prevTimer + timeDiff);
-      // console.log(timer);
-      setCorrectTries(0);
-      setIndex(prevIndex => prevIndex + 1);
-      setNextButtonVisible(false);
-      setCorrectIndex([]);
-      setTries(noOfTries);
-      if ((selectedSetId === 1 && index === 5) || (selectedSetId === 6 && index === 10)) {
-        const endTime = new Date();
-        const timeDiff = (endTime - startTime) / 1000;
-        setTimer(timeDiff);
-        navigate('/end');
-      }
-    };
-
-    const rightClick = (word) => {
-      const audio = new Audio(`/Audio/${word}.mp3`);
-      audio.play();
-    };
-
-    const eachLetter = (word) => {
-      const audio = new Audio(`/EachAudio/${word}.mp3`);
-      audio.play();
-    };
-
-    for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < 3; j++) {
-        singleAlphabet.push(alphabetArr[i][0][j]);
-      }
+  const handleNext = () => {
+    playAudio("GoodJob")
+    window.scrollTo(0, 160);
+    setCorrectTries(0);
+    setIndex(prevIndex => prevIndex + 1);
+    setNextButtonVisible(false);
+    setCorrectIndex([]);
+    setTries(noOfTries);
+    if ((selectedSetId === 1 && index === 5) || (selectedSetId === 6 && index === 10)) {
+      const endTime = new Date();
+      const timeDiff = (endTime - startTime) / 1000;
+      setTimer(timeDiff);
+      navigate('/end');
     }
+  };
 
-    const groupedButtons = [];
-    for (let i = 0; i < 5; i++) {
-      const buttonGroup = [];
-      for (let j = 0; j < 3; j++) {
-        const letterIndex = i * 3 + j;
-        const letter = singleAlphabet[letterIndex];
-        const correctWord = wordArr[i];
-        buttonGroup.push(
-          <button
-            key={letterIndex}
-            id={letterIndex}  
-            className="btn letter-button p-3 mb-3"
-            onClick={() => { checkLetter(letter, correctWord, i, letterIndex); }}
-            style={{ backgroundColor: buttonColors[letterIndex] }}
-          >
-            {letter}
-          </button>
-        );
-      }
-      groupedButtons.push(
-        <div key={i} className="button-group-horizontal d-flex">
-          <div className="button-group-vertical">
-            {buttonGroup}
-          </div>
-          <button key={`rbutton${i}`} id={`rbutton${i}`} className="btn btn-lg word-button" onClick={() => rightClick(wordArr[i])}>
-            {w[i]}
-          </button>
-        </div>
+
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 3; j++) {
+      singleAlphabet.push(alphabetArr[i][0][j]);
+    }
+  }
+
+  const groupedButtons = [];
+  for (let i = 0; i < 5; i++) {
+    const buttonGroup = [];
+    for (let j = 0; j < 3; j++) {
+      const letterIndex = i * 3 + j;
+      const letter = singleAlphabet[letterIndex];
+      const correctWord = wordArr[i];
+      buttonGroup.push(
+        <button
+          key={letterIndex}
+          id={letterIndex}
+          className="btn letter-button p-3 mb-3"
+          onClick={() => { checkLetter(letter, correctWord, i, letterIndex); }}
+          style={{ backgroundColor: buttonColors[letterIndex] }}
+        >
+          {letter}
+        </button>
       );
     }
+    groupedButtons.push(
+      <div key={i} className="button-group-horizontal d-flex">
+        <div className="button-group-vertical">
+          {buttonGroup}
+        </div>
+        <button key={`rbutton${i}`} id={`rbutton${i}`} className="btn btn-lg word-button" onClick={() => speechSynthesis(wordArr[i])}>
+          {w[i]}
+        </button>
+      </div>
+    );
+  }
 
-    return (
-      <div>
-        <div className='justify-content-center d-flex'>
+  return (
+    <div>
+      <div className='justify-content-center d-flex'>
         <div className='head'>
           <h1 className="text-center mt-2">Find the Missing Letters</h1>
           <div className="d-flex mt-4 inst">
-           
+
             <div className='instruction-container'>
               <div className='d-flex justify-content-center'>
 
@@ -216,19 +205,19 @@
             </div>
           </div>
         </div>
-        </div>
-        <div className='outerDiv'>
-
-          <div className="grid-container flex-column justify-content-center align-items-center mt-4">
-            {groupedButtons}
-          </div>
-          <div className='nextButton mt-5'>
-            
-            {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
-          </div>
-          <div style={{ marginBottom: '50px' }}></div>
-          {showConfetti && <Confetti/>}
-        </div>
       </div>
-    );
-  }
+      <div className='outerDiv'>
+
+        <div className="grid-container flex-column justify-content-center align-items-center mt-4">
+          {groupedButtons}
+        </div>
+        <div className='nextButton mt-5'>
+
+          {nextButtonVisible && <button className="btn btn-success btn-lg next-button" onClick={handleNext}>Next</button>}
+        </div>
+        <div style={{ marginBottom: '50px' }}></div>
+        {showConfetti && <Confetti />}
+      </div>
+    </div>
+  );
+}
