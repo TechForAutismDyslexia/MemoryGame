@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkmemorygame=self.webpackChunkmemorygame||[]).push([[773],{773:(e,c,m)=>{e.exports=m.p+"static/media/img1.fc342becf99996c59ca1.jpg"}}]);

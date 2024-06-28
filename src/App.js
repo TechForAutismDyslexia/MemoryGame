@@ -9,7 +9,7 @@ import { GameProvider } from './Components/GameContext.js';
 function App() {
   return (
     <GameProvider>
-      <Router basename='/memorygame'>
+      <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/game" element={<MissingLetterGame />} />
