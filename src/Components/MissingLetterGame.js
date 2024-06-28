@@ -60,15 +60,10 @@ export default function MissingLetterGame() {
     // eslint-disable-next-line
   }, [index]);
 
-  const importAudio = async (word) => {
-    const { default: audio } = await import(`../assets/EachAudio/${word}.mp3`);
-    return audio;
-  };
 
   const playAudio = async (word) => {
-    const audio = await importAudio(word);
-    const real = new Audio(audio);
-    await real.play();
+    const audio = new Audio(require(`../assets/EachAudio/${word}.mp3`)); 
+    await audio.play();
   };
 
   const speechSynthesis = (word) => {
