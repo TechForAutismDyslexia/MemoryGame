@@ -29,7 +29,8 @@
     const [correctIndex, setCorrectIndex] = useState([]);
     // eslint-disable-next-line
     const [startTime, setStartTime] = useState(new Date());
-    const [showConfetti, setShowConfetti] = useState(false)
+    const [showConfetti, setShowConfetti] = useState(false);
+    const [audioFiles, setAudioFiles] = useState({});
 
     let wordArr = [], alphabetArr = [], tempArr = [];
     let singleAlphabet = [];
@@ -40,6 +41,22 @@
       alphabetArr.push(tempArr);
       tempArr = [];
     }
+
+    useEffect(() => {
+      const loadAudioFiles = async () => {
+        const audioFilesTemp = {};
+        for (const word of wordArr) {
+          try {
+            const audioModule = await import(`../assets/EachAudio/${word}.mp3`);
+            audioFilesTemp[word] = new Audio(audioModule.default);
+          } catch (error) {
+            console.error('Error loading audio file:', error);
+          }
+        }
+        setAudioFiles(audioFilesTemp);
+      };
+      loadAudioFiles();
+    }, [index]);
 
     useEffect(() => {
       let underWord = [];
@@ -64,14 +81,17 @@
     const playAudio = async(word)=>{
       const synth = window.speechSynthesis;
       const utterThis = new SpeechSynthesisUtterance(word);
-      utterThis.rate = 0.8;
+      //voices
+      const voices = synth.getVoices();
+      utterThis.voice = voices[1];
       synth.speak(utterThis); 
     }
 
-    const eachLetter = (word) => {
-      const audio = new Audio(require(`../assets/EachAudio/${word}.mp3`));
+    const eachLetter = async(word) => {
+      const audio = audioFiles[word];
       audio.play();
     };
+
 
     const checkLetter = async (letter, word, indexW, i) => {
       setNoOfTries(noOfTries + 1);
@@ -127,13 +147,7 @@
 
     const handleNext = () => {
       playAudio("GoodJob");
-      window.scrollTo(0, 160);
-      // setStartTimer(false);
-      // const endTime = new Date();
-      // const timeDiff = (endTime - startTime) / 1000;
-      // setStartTime(timeDiff);
-      // setTimer(prevTimer => prevTimer + timeDiff);
-      // console.log(timer);
+      window.scrollTo(0, 160); 
       setCorrectTries(0);
       setIndex(prevIndex => prevIndex + 1);
       setNextButtonVisible(false);

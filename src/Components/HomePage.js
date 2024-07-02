@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GameContext } from './GameContext.js';
+import homeImage from '../Images/img1.jpg';
 
 export default function HomePage() {
   const { setSelectedSetId } = useContext(GameContext);
@@ -24,26 +25,26 @@ export default function HomePage() {
           <div className='col-md-6'>
             <div className='card mb-3 ' style={{ borderRadius: '55px' }}>
               <div className='card-body d-flex flex-column align-items-center'>
-                <Link to="/game" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
+                <Link to="/play" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <img src={homeImage} alt="Memory Game" className='img-fluid mb-3' />
                 </Link>
-                <Link to="/game" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to="/play" onClick={() => handleSetSelection(1)} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <p style={{ fontSize: '30px' }} className='card-text'>Set A</p>
                 </Link>
-                <Link to="/game" onClick={() => handleSetSelection(1)} className='btn btn-lg btn-primary'>Start Game</Link>
+                <Link to="/play" onClick={() => handleSetSelection(1)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
           </div>
           <div className='col-md-6'>
             <div className='card mb-3' style={{ borderRadius: '55px' }}>
               <div className='card-body d-flex flex-column align-items-center'>
-                <Link to="/game" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
-                  <img src={"/Images/img1.jpg"} alt="Memory Game" className='img-fluid mb-3' />
+                <Link to="/play" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  <img src={homeImage} alt="Memory Game" className='img-fluid mb-3' />
                 </Link>
-                <Link to="/game" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Link to="/play" onClick={() => handleSetSelection(6)} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <p style={{ fontSize: '30px' }} className='card-text'>Set B</p>
                 </Link>
-                <Link to="/game" onClick={() => handleSetSelection(6)} className='btn btn-lg btn-primary'>Start Game</Link>
+                <Link to="/play" onClick={() => handleSetSelection(6)} className='btn btn-lg btn-primary'>Start Game</Link>
               </div>
             </div>
           </div>
