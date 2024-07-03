@@ -1,17 +1,31 @@
 import React, { useContext, useEffect } from 'react';
 import { GameContext } from './GameContext.js';
-import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 export default function EndPage() {
-  const { selectedSetId, tries, timer } = useContext(GameContext);
-  const navigate = useNavigate();
+  const {tries, timer } = useContext(GameContext);
 
   useEffect(() => {
-    if (selectedSetId === null) {
-      navigate('/');
-    }
-  }, [selectedSetId, navigate]);
+    const sendGameData = async () => {
+      const hasSentGameData = localStorage.getItem('flag');
+      if (hasSentGameData == 'true') {
+        try {
+          await axios.post("https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata", {
+            gameId: 5,
+            tries: tries,
+            timer: timer,
+            status: true,
+          });
+          localStorage.setItem('flag', 'false');
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+    
+    sendGameData();
+  }, []);
 
   return (
     <div className='d-flex align-items-center justify-content-center'>

@@ -4,10 +4,11 @@
   import Confetti from 'react-confetti';
   import { GameContext } from './GameContext.js';
   import { Popover } from 'bootstrap';
+  import axios from 'axios';
 
   export default function MissingLetterGame() {
     const navigate = useNavigate();
-    const { selectedSetId, setTries, setTimer } = useContext(GameContext);
+    const { selectedSetId,timer, tries, setTries, setTimer } = useContext(GameContext);
 
     useEffect(() => {
       if (selectedSetId === null) {
@@ -74,6 +75,7 @@
       }
       setW(underWord);
       setButtonColors(Array(15).fill(''));
+      localStorage.setItem('flag', 'true');
       // eslint-disable-next-line
     }, [index]);
 
@@ -145,7 +147,7 @@
       }
     };
 
-    const handleNext = () => {
+    const handleNext = async() => {
       playAudio("GoodJob");
       window.scrollTo(0, 160); 
       setCorrectTries(0);
@@ -160,7 +162,6 @@
         navigate('/end');
       }
     };
-
    
 
     for (let i = 0; i < 5; i++) {
@@ -199,6 +200,9 @@
         </div>
       );
     }
+
+
+
 
     return (
       <div>
