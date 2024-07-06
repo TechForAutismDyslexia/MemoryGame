@@ -2,9 +2,8 @@
   import wordsData from '../words.json';
   import { useNavigate } from 'react-router-dom';
   import Confetti from 'react-confetti';
-  import { GameContext } from './GameContext.js';
+  import { GameContext } from './GameContext.jsx';
   import { Popover } from 'bootstrap';
-  import axios from 'axios';
 
   export default function MissingLetterGame() {
     const navigate = useNavigate();
@@ -48,7 +47,7 @@
         const audioFilesTemp = {};
         for (const word of wordArr) {
           try {
-            const audioModule = await import(`../assets/EachAudio/${word}.mp3`);
+            const audioModule = await import(`../assets/audios/${word}.mp3`);
             audioFilesTemp[word] = new Audio(audioModule.default);
           } catch (error) {
             console.error('Error loading audio file:', error);
