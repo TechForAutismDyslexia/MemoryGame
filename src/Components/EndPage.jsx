@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { GameContext } from './GameContext.js';
+import { GameContext } from './GameContext.jsx';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,6 +11,7 @@ export default function EndPage() {
       const hasSentGameData = localStorage.getItem('flag');
       if (hasSentGameData == 'true') {
         try {
+          
           await axios.post("https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata", {
             gameId: 5,
             tries: tries,
@@ -43,7 +44,7 @@ export default function EndPage() {
               <p style={{ fontSize: '2rem' }}>Total Time: {timer.toFixed(2)} seconds</p>
             </div>
             <div className='d-flex align-items-center justify-content-center'>
-              <Link type="button" className='btn btn-primary' to="/">Return to Home</Link>
+              <Link type="button" className='btn btn-primary' to="http://localhost:8080">Return to Home</Link>
             </div>
           </div>
         </div>

@@ -1,10 +1,10 @@
 import React from 'react';
-import HomePage from './Components/HomePage';
-import MissingLetterGame from './Components/MissingLetterGame';
-import EndPage from './Components/EndPage';
+import HomePage from './Components/HomePage.jsx';
+import MissingLetterGame from './Components/MissingLetterGame.jsx';
+import EndPage from './Components/EndPage.jsx';
 import './Components/MissingLetterGame.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { GameProvider } from './Components/GameContext.js';
+import { GameProvider } from './Components/GameContext.jsx';
 
 function App() {
   return (

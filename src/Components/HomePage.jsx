@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { GameContext } from './GameContext.js';
-import homeImage from '../Images/img1.jpg';
+import homeImage from '../assets/images/img1.jpg';
 
 export default function HomePage() {
   const { setSelectedSetId } = useContext(GameContext);
