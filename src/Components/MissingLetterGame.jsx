@@ -47,7 +47,7 @@
         const audioFilesTemp = {};
         for (const word of wordArr) {
           try {
-            const audioModule = await import(`../assets/eachaudio/${word}.mp3`);
+            const audioModule = await import(`../assets/audios/${word}.mp3`);
             audioFilesTemp[word] = new Audio(audioModule.default);
           } catch (error) {
             console.error('Error loading audio file:', error);

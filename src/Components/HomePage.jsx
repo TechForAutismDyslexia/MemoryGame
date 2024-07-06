@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { GameContext } from './GameContext.js';
+import { GameContext } from './GameContext.jsx';
 import homeImage from '../assets/images/img1.jpg';
 
 export default function HomePage() {
