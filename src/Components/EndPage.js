@@ -4,26 +4,33 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export default function EndPage() {
-  const {tries, timer } = useContext(GameContext);
+  const { tries, timer } = useContext(GameContext);
 
   useEffect(() => {
     const sendGameData = async () => {
       const hasSentGameData = localStorage.getItem('flag');
       if (hasSentGameData == 'true') {
         try {
-          await axios.post("https://jwlgamesbackend.vercel.app/api/caretaker/sendgamedata", {
-            gameId: 5,
+          const gameId = localStorage.getItem('gameId');
+          const childId = localStorage.getItem('childId');
+          await axios.put(`https://jwlgamesbackend.vercel.app/api/caretaker/${gameId}/${childId}`, {
             tries: tries,
             timer: timer,
             status: true,
-          });
+          },
+            {
+              headers: {
+                "Authorization": `${localStorage.getItem('logintoken')}`
+              }
+            }
+          );
           localStorage.setItem('flag', 'false');
         } catch (error) {
           console.log(error);
         }
       }
     };
-    
+
     sendGameData();
   }, []);
 

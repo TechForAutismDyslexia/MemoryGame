@@ -4,7 +4,7 @@
   import Confetti from 'react-confetti';
   import { GameContext } from './GameContext.js';
   import { Popover } from 'bootstrap';
-  import axios from 'axios';
+ import { Link } from 'react-router-dom';
 
   export default function MissingLetterGame() {
     const navigate = useNavigate();
@@ -212,12 +212,12 @@
           <div className="d-flex mt-4 inst">
            
             <div className='instruction-container'>
-              <div className='d-flex justify-content-center'>
-
+              <div className='d-flex justify-content-evenly'>
+              <Link className='btn btn-warning' to="/">Home</Link>
                 <button type="button" className="btn btn-warning me-1" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Make sure to turn up the volume!">
                   Instructions
                 </button>
-                <svg xmlns="http://www.w3.org/2000/svg" onClick={()=>playAudio("instructions")} width="35" height="35" fill="#3269a8" className="bi bi-play-circle-fill me-1" viewBox="0 0 16 16">
+                <svg xmlns="http://www.w3.org/2000/svg" onClick={()=>playAudio("Select the correct letter from the options")} width="35" height="35" fill="#3269a8" className="bi bi-play-circle-fill me-1" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814z" />
                 </svg>
               </div>
