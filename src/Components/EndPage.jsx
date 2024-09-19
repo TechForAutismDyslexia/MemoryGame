@@ -8,27 +8,28 @@ export default function EndPage() {
 
   useEffect(() => {
     const sendGameData = async () => {
-      const hasSentGameData = localStorage.getItem('flag');
-      if (hasSentGameData == 'true') {
+      // const hasSentGameData = localStorage.getItem('flag');
+      // if (hasSentGameData == 'true') {
         try {
-          const gameId = localStorage.getItem('gameId');
-          const childId = localStorage.getItem('childId');
-          await axios.put(`https://jwlgamesbackend.vercel.app/api/caretaker/${gameId}/${childId}`, {
+          // const gameId = localStorage.getItem('gameId');
+          // const childId = localStorage.getItem('childId');
+          // await axios.put(`https://jwlgamesbackend.vercel.app/api/caretaker/${gameId}/${childId}`, {
+          await axios.put(`http://localhost:4000/api/caretaker/2/3/3`, {
             tries: tries,
             timer: timer,
             status: true,
           },
-            {
-              headers: {
-                "Authorization": `${localStorage.getItem('logintoken')}`
-              }
-            }
+            // {
+            //   headers: {
+            //     "Authorization": `${localStorage.getItem('logintoken')}`
+            //   }
+            // }
           );
-          localStorage.setItem('flag', 'false');
+          // localStorage.setItem('flag', 'false');
         } catch (error) {
           console.log(error);
         }
-      }
+      // }
     };
 
     sendGameData();
