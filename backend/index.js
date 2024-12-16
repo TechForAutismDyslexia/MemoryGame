@@ -10,7 +10,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb://localhost:27017/jwlgames')
-    .then(() => {
+.then(() => {
         console.log("Connected to database");
     })
     .catch((err) => {
