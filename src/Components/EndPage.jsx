@@ -34,6 +34,9 @@ export default function EndPage() {
     sendGameData();
   }, []);
 
+  const handleHome = () => {  
+    window.location.href = '/games/memorygame';
+  }
   return (
     <div className='d-flex align-items-center justify-content-center'>
       <div className='container'>
@@ -50,7 +53,7 @@ export default function EndPage() {
               <p style={{ fontSize: '2rem' }}>Total Time: {timer.toFixed(2)} seconds</p>
             </div>
             <div className='d-flex align-items-center justify-content-center'>
-              <Link type="button" className='btn btn-primary' to="http://localhost:8080">Return to Home</Link>
+              <button type="button" className='btn btn-primary' onClick={handleHome}>Return to Home</button>
             </div>
           </div>
         </div>
